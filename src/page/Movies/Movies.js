@@ -6,7 +6,7 @@ import Searchbar from 'components/SearchBar';
 
 export default function Movies() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchingMovie, setSearchingMovie] = useState([]);
+  const [searchingMovie, setSearchingMovie] = useState(null);
   const [error, setError] = useState(null);
   const [status, setStatus] = useState('idle');
 
