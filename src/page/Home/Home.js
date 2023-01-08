@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { TrandingList, Title } from './Home.styled';
 
 export default function Home() {
   const [trending, setTrending] = useState('');
@@ -26,14 +27,14 @@ export default function Home() {
   if (status === 'resolved') {
     return (
       <div>
-        <p>Trending</p>
+        <Title>Trending today</Title>
         <ul>
           {trending.map(film => (
-            <li key={film.id}>
+            <TrandingList key={film.id}>
               <Link to={`/movies/${film.id}`} state={{ from: location }}>
                 {film.title}
               </Link>
-            </li>
+            </TrandingList>
           ))}
         </ul>
       </div>

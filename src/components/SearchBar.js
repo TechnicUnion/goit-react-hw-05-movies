@@ -22,7 +22,7 @@ export default function Searchbar({ onSubmit }) {
   };
 
   return (
-    <header>
+    <div>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -35,7 +35,7 @@ export default function Searchbar({ onSubmit }) {
           <BsSearch />
         </button>
       </form>
-    </header>
+    </div>
   );
 }
 

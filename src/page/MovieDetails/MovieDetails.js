@@ -2,8 +2,12 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
-// import PropTypes from 'prop-types';
-// import css from '../styles.module.css';
+import {
+  FilmInfo,
+  Poster,
+  InformationList,
+  InformationItem,
+} from './MovieDetails.styled';
 
 export default function MoviesDetails() {
   const { movieId } = useParams();
@@ -31,49 +35,45 @@ export default function MoviesDetails() {
     <div>
       {movieInfo && (
         <div>
-          <Link to={backLinkHref}>
-            <AiOutlineArrowLeft /> Go back
-          </Link>
-
-          <img
-            src={`https://www.themoviedb.org/t/p/w300/${movieInfo.poster_path}`}
-            alt="Poster"
-          />
-          <div>
-            <h2>
-              {movieInfo.original_title} ({yearRelease})
-            </h2>
-            <p>User Score: {Math.round(movieInfo.vote_average * 10)}%</p>
-            <h3>Overview</h3>
-            <p>{movieInfo.overview}</p>
-            <h3>Genres</h3>
-            <p>{movieInfo.genres.map(ganr => ganr.name).join(' ')}</p>
-          </div>
+          <button>
+            <Link to={backLinkHref}>
+              <AiOutlineArrowLeft /> Go back
+            </Link>
+          </button>
+          <FilmInfo>
+            <Poster
+              src={`https://www.themoviedb.org/t/p/w300/${movieInfo.poster_path}`}
+              alt="Poster"
+            />
+            <div>
+              <h2>
+                {movieInfo.original_title} ({yearRelease})
+              </h2>
+              <p>User Score: {Math.round(movieInfo.vote_average * 10)}%</p>
+              <h3>Overview</h3>
+              <p>{movieInfo.overview}</p>
+              <h3>Genres</h3>
+              <p>{movieInfo.genres.map(ganr => ganr.name).join(' ')}</p>
+            </div>
+          </FilmInfo>
         </div>
       )}
       <div>
         <p>Additional information</p>
-        <ul>
-          <li>
+        <InformationList>
+          <InformationItem>
             <Link to="cast" state={{ from: backLinkHref }}>
               Cast
             </Link>
-          </li>
-          <li>
+          </InformationItem>
+          <InformationItem>
             <Link to="reviews" state={{ from: backLinkHref }}>
               Reviews
             </Link>
-          </li>
-        </ul>
+          </InformationItem>
+        </InformationList>
       </div>
       <Outlet />
     </div>
   );
 }
-
-// ImageGallery.propTypes = {
-//   searchQuery: PropTypes.string,
-//   page: PropTypes.number,
-//   onClick: PropTypes.func,
-//   newFetch: PropTypes.bool,
-// };

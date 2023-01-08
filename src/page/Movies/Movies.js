@@ -34,12 +34,13 @@ export default function Movies() {
     if (searchQuery !== data) {
       setSearchParams(data !== '' ? { query: data } : {});
     }
+    return setStatus('idle');
   };
 
   if (status === 'idle') {
     return (
       <div>
-        <p>Введіть запит для пошуку</p>
+        <p>Enter the title of the movie to search</p>
         <Searchbar onSubmit={formSubmitHandler} />
       </div>
     );
@@ -70,10 +71,3 @@ export default function Movies() {
     );
   }
 }
-
-// ImageGallery.propTypes = {
-//   searchQuery: PropTypes.string,
-//   page: PropTypes.number,
-//   onClick: PropTypes.func,
-//   newFetch: PropTypes.bool,
-// };
