@@ -12,7 +12,6 @@ export default function Home() {
     )
       .then(response => response.json())
       .then(trendingFilmsList => {
-        console.log(trendingFilmsList);
         setTrending(trendingFilmsList.results);
         setStatus('resolved');
         return trendingFilmsList;
@@ -29,9 +28,9 @@ export default function Home() {
         <p>Trending</p>
         <ul>
           {trending.map(film => (
-            <Link to="/movies/:movieId" key={film.id}>
-              {film.title}
-            </Link>
+            <li key={film.id}>
+              <Link to={`/movies/${film.id}`}>{film.title}</Link>
+            </li>
           ))}
         </ul>
       </div>

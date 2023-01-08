@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BsSearch } from 'react-icons/bs';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // import css from '../styles.module.css';
 
 export default function Searchbar({ onSubmit }) {
@@ -24,10 +24,6 @@ export default function Searchbar({ onSubmit }) {
   return (
     <header>
       <form onSubmit={handleSubmit}>
-        <button type="submit">
-          <BsSearch />
-        </button>
-
         <input
           type="text"
           autoComplete="off"
@@ -35,11 +31,14 @@ export default function Searchbar({ onSubmit }) {
           placeholder="Search movies"
           onChange={handleInputChange}
         />
+        <button type="submit">
+          <BsSearch />
+        </button>
       </form>
     </header>
   );
 }
 
-Searchbar.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
+// Searchbar.propTypes = {
+//   onSubmit: PropTypes.func.isRequired,
+// };

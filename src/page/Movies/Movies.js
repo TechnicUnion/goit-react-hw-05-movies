@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import Searchbar from 'components/SearchBar';
 // import PropTypes from 'prop-types';
 // import css from '../styles.module.css';
 
 export default function Movies() {
-  const [searchQuery, setSearchQuery] = useState('');
   const [searchingMovie, setSearchingMovie] = useState(null);
   const [error, setError] = useState(null);
   const [status, setStatus] = useState('idle');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = searchParams.get('query');
 
   useEffect(() => {
     if (!searchQuery) {
@@ -22,7 +23,6 @@ export default function Movies() {
       .then(response => response.json())
       .then(movieList => {
         setStatus('resolved');
-
         return setSearchingMovie([movieList.results]);
       })
       .catch(error => {
@@ -33,7 +33,7 @@ export default function Movies() {
 
   const formSubmitHandler = data => {
     if (searchQuery !== data) {
-      setSearchQuery(data);
+      setSearchParams(data !== '' ? { query: data } : {});
     }
   };
 
@@ -46,23 +46,18 @@ export default function Movies() {
     );
   }
 
-  //   if (status === 'pending') {
-  //     return <Loader />;
-  //   }
-
   if (status === 'rejected') {
     return <h1>{error.message}</h1>;
   }
-  console.log(searchingMovie);
   if (searchingMovie) {
     return (
       <div>
         <Searchbar onSubmit={formSubmitHandler} />
         <ul>
           {searchingMovie[0].map(film => (
-            <Link to="/movies/:movieId" key={film.id}>
-              {film.title}
-            </Link>
+            <li key={film.id}>
+              <Link to={`/movies/${film.id}`}>{film.title}</Link>
+            </li>
           ))}
         </ul>
       </div>
