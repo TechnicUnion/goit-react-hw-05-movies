@@ -10,17 +10,21 @@ export default function Reviews() {
       `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=894ef72300682f1db325dae2afe3e7e2`
     )
       .then(response => response.json())
-      .then(reviewsInfo => {
-        return setReviewsInfo(reviewsInfo);
+      .then(data => {
+        return setReviewsInfo(data);
       })
       .catch(error => {
         return error;
       });
   }, [movieId]);
 
+  if (!reviewsInfo) {
+    return;
+  }
+
   return (
     <div>
-      {reviewsInfo && (
+      {reviewsInfo.results.length !== 0 ? (
         <div>
           <ul>
             {reviewsInfo.results.map(review => (
@@ -33,6 +37,8 @@ export default function Reviews() {
             ))}
           </ul>
         </div>
+      ) : (
+        <p>We don't have any reviews for this movie.</p>
       )}
     </div>
   );

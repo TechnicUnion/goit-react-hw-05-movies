@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { useParams, Link, Outlet } from 'react-router-dom';
-
+import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 // import PropTypes from 'prop-types';
 // import css from '../styles.module.css';
 
@@ -9,6 +9,8 @@ export default function MoviesDetails() {
   const { movieId } = useParams();
   const [movieInfo, setMomieInfo] = useState(null);
   const [yearRelease, setYearRelease] = useState(null);
+  const location = useLocation();
+  const backLinkHref = location.state?.from ?? '/movies';
 
   useEffect(() => {
     fetch(
@@ -29,6 +31,10 @@ export default function MoviesDetails() {
     <div>
       {movieInfo && (
         <div>
+          <Link to={backLinkHref}>
+            <AiOutlineArrowLeft /> Go back
+          </Link>
+
           <img
             src={`https://www.themoviedb.org/t/p/w300/${movieInfo.poster_path}`}
             alt="Poster"
@@ -49,10 +55,14 @@ export default function MoviesDetails() {
         <p>Additional information</p>
         <ul>
           <li>
-            <Link to="cast">Cast</Link>
+            <Link to="cast" state={{ from: backLinkHref }}>
+              Cast
+            </Link>
           </li>
           <li>
-            <Link to="reviews">Reviews</Link>
+            <Link to="reviews" state={{ from: backLinkHref }}>
+              Reviews
+            </Link>
           </li>
         </ul>
       </div>

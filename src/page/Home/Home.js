@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function Home() {
   const [trending, setTrending] = useState('');
   //   const [error, setError] = useState(null);
   const [status, setStatus] = useState('idle');
+  const location = useLocation();
 
   useEffect(() => {
     fetch(
@@ -29,7 +30,9 @@ export default function Home() {
         <ul>
           {trending.map(film => (
             <li key={film.id}>
-              <Link to={`/movies/${film.id}`}>{film.title}</Link>
+              <Link to={`/movies/${film.id}`} state={{ from: location }}>
+                {film.title}
+              </Link>
             </li>
           ))}
         </ul>

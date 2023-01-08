@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useLocation } from 'react-router-dom';
 import Searchbar from 'components/SearchBar';
-// import PropTypes from 'prop-types';
-// import css from '../styles.module.css';
 
 export default function Movies() {
   const [searchingMovie, setSearchingMovie] = useState(null);
@@ -10,6 +8,7 @@ export default function Movies() {
   const [status, setStatus] = useState('idle');
   const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery = searchParams.get('query');
+  const location = useLocation();
 
   useEffect(() => {
     if (!searchQuery) {
@@ -49,17 +48,24 @@ export default function Movies() {
   if (status === 'rejected') {
     return <h1>{error.message}</h1>;
   }
-  if (searchingMovie) {
+
+  if (status === 'resolved') {
     return (
       <div>
         <Searchbar onSubmit={formSubmitHandler} />
-        <ul>
-          {searchingMovie[0].map(film => (
-            <li key={film.id}>
-              <Link to={`/movies/${film.id}`}>{film.title}</Link>
-            </li>
-          ))}
-        </ul>
+        {searchingMovie[0].length > 0 ? (
+          <ul>
+            {searchingMovie[0].map(film => (
+              <li key={film.id}>
+                <Link to={`/movies/${film.id}`} state={{ from: location }}>
+                  {film.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No movies were found for your request</p>
+        )}
       </div>
     );
   }

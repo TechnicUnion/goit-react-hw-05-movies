@@ -11,7 +11,6 @@ export default function Cast() {
     )
       .then(response => response.json())
       .then(castInfo => {
-        console.log(castInfo);
         return setCastInfo(castInfo);
       })
       .catch(error => {
